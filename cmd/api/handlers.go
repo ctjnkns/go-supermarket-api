@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -10,7 +11,10 @@ func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &product)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
@@ -32,7 +36,10 @@ func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
 func (app *Config) GetItems(w http.ResponseWriter, r *http.Request) {
 	response, err := app.GetDatabaseItems()
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
@@ -50,13 +57,19 @@ func (app *Config) AddItem(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &product)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
 	response, err := app.AddDatabaseItem(product)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
@@ -74,13 +87,19 @@ func (app *Config) AddItems(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &products)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
 	response, err := app.AddDatabaseItems(products)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
@@ -98,13 +117,19 @@ func (app *Config) DeleteItem(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &product)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
 	response, err := app.DeleteDatabaseItem(product.Code)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
@@ -122,13 +147,19 @@ func (app *Config) DeleteItems(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &products)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
 	response, err := app.DeleteDatabaseItems(products)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
@@ -146,13 +177,19 @@ func (app *Config) UpdateItem(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &product)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
 	response, err := app.UpdateDatabaseItem(product)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
@@ -170,13 +207,19 @@ func (app *Config) UpdateItems(w http.ResponseWriter, r *http.Request) {
 
 	err := app.readJSON(w, r, &products)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
 	response, err := app.UpdateDatabaseItems(products)
 	if err != nil {
-		app.errorJSON(w, err)
+		err := app.errorJSON(w, err)
+		if err != nil {
+			log.Printf("Problem with errorJSON: %s", err)
+		}
 		return
 	}
 
