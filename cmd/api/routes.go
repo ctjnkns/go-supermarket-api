@@ -32,8 +32,8 @@ func (app *Config) routes() http.Handler {
 	mux.Post("/deleteitem", app.DeleteItem)
 	mux.Post("/deleteitems", app.DeleteItems)
 
-	//mux.Post("/updateitem", app.UpdateItem)
-	//mux.Post("/updateitems", app.UpdateItems)
+	mux.Post("/updateitem", app.UpdateItem)
+	mux.Post("/updateitems", app.UpdateItems)
 
 	return mux
 }

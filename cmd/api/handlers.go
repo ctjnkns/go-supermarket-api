@@ -165,3 +165,65 @@ func (app *Config) DeleteItems(w http.ResponseWriter, r *http.Request) {
 
 	_ = app.writeJSON(w, http.StatusOK, payload)
 }
+
+func (app *Config) UpdateItem(w http.ResponseWriter, r *http.Request) {
+	app.Mutex.Lock()
+	defer app.Mutex.Unlock()
+
+	var product Product
+
+	err := app.readJSON(w, r, &product)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+	//fmt.Fprintf(w, "%q\n", &product)
+	//look up the item to see if it already exists, we don't want to add duplicates.
+	if _, ok := app.Database[product.Code]; !ok {
+		msg := fmt.Sprintf("item not found %q", product.Code)
+		http.Error(w, msg, http.StatusBadRequest) //send a 400
+		return
+	}
+
+	app.Database[product.Code] = product
+
+	payload := jsonResponse{
+		Error:   false,
+		Message: fmt.Sprintf("Updated %s", product.Code),
+		Data:    product,
+	}
+
+	app.writeJSON(w, http.StatusOK, payload)
+}
+
+func (app *Config) UpdateItems(w http.ResponseWriter, r *http.Request) {
+	app.Mutex.Lock()
+	defer app.Mutex.Unlock()
+
+	var products Products
+
+	err := app.readJSON(w, r, &products)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+	//fmt.Fprintf(w, "%q\n", &product)
+	//look up the item to see if it already exists, we don't want to add duplicates.
+	for _, product := range products.Products {
+		if _, ok := app.Database[product.Code]; !ok {
+			msg := fmt.Sprintf("item not found %q", product.Code)
+			http.Error(w, msg, http.StatusBadRequest) //send a 400
+			return
+		}
+
+		app.Database[product.Code] = product
+	}
+
+	payload := jsonResponse{
+		Error:   false,
+		Message: "Updated multiple products",
+		Data:    products,
+	}
+
+	app.writeJSON(w, http.StatusOK, payload)
+}
