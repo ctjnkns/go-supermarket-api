@@ -25,8 +25,15 @@ func (app *Config) routes() http.Handler {
 
 	mux.Get("/getitem", app.GetItem)
 	mux.Get("/getitems", app.GetItems)
+
 	mux.Post("/additem", app.AddItem)
 	mux.Post("/additems", app.AddItems)
+
+	mux.Post("/deleteitem", app.DeleteItem)
+	mux.Post("/deleteitems", app.DeleteItems)
+
+	//mux.Post("/updateitem", app.UpdateItem)
+	//mux.Post("/updateitems", app.UpdateItems)
 
 	return mux
 }

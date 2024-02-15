@@ -100,9 +100,68 @@ func (app *Config) AddItems(w http.ResponseWriter, r *http.Request) {
 
 	payload := jsonResponse{
 		Error:   false,
-		Message: fmt.Sprintf("Added multiple products"),
+		Message: "Added multiple products",
 		Data:    products,
 	}
 
 	app.writeJSON(w, http.StatusOK, payload)
+}
+
+func (app *Config) DeleteItem(w http.ResponseWriter, r *http.Request) {
+	app.Mutex.Lock()
+	defer app.Mutex.Unlock()
+
+	var product Product
+
+	err := app.readJSON(w, r, &product)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	if _, ok := app.Database[product.Code]; !ok {
+		msg := fmt.Sprintf("item not found %q", product.Code)
+		http.Error(w, msg, http.StatusBadRequest) //send a 400
+		return
+	}
+
+	delete(app.Database, product.Code)
+
+	payload := jsonResponse{
+		Error:   false,
+		Message: fmt.Sprintf("Deleted product: %s", product.Code),
+		Data:    nil,
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, payload)
+}
+
+func (app *Config) DeleteItems(w http.ResponseWriter, r *http.Request) {
+	app.Mutex.Lock()
+	defer app.Mutex.Unlock()
+
+	var products Products
+
+	err := app.readJSON(w, r, &products)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	for _, product := range products.Products {
+		if _, ok := app.Database[product.Code]; !ok {
+			msg := fmt.Sprintf("item not found %q", product.Code)
+			http.Error(w, msg, http.StatusBadRequest) //send a 400
+			return
+		}
+		delete(app.Database, product.Code)
+	}
+
+	payload := jsonResponse{
+		Error:   false,
+		Message: "Deleted multiple products",
+		Data:    products,
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, payload)
 }
