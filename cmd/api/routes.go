@@ -23,6 +23,7 @@ func (app *Config) routes() http.Handler {
 
 	mux.Use(middleware.Heartbeat("/ping"))
 
+	mux.Get("/getitem", app.GetItem)
 	mux.Get("/getitems", app.GetItems)
 	mux.Post("/additem", app.AddItem)
 	mux.Post("/additems", app.AddItems)

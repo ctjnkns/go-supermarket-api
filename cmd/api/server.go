@@ -13,8 +13,8 @@ type dollars float32
 
 type Product struct {
 	Code  Code    `json:"code"`
-	Name  string  `json:"name"`
-	Price dollars `json:"price"`
+	Name  string  `json:"name,omitempty"`
+	Price dollars `json:"price,omitempty"`
 }
 
 type Products struct {

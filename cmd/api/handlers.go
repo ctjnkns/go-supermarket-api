@@ -5,6 +5,33 @@ import (
 	"net/http"
 )
 
+func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
+	app.Mutex.Lock()
+	defer app.Mutex.Unlock()
+
+	var product Product
+
+	err := app.readJSON(w, r, &product)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	if _, ok := app.Database[product.Code]; !ok {
+		msg := fmt.Sprintf("item not found %q", product.Code)
+		http.Error(w, msg, http.StatusBadRequest) //send a 400
+		return
+	}
+
+	payload := jsonResponse{
+		Error:   false,
+		Message: fmt.Sprintf("List product: %s", product.Code),
+		Data:    app.Database[product.Code],
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, payload)
+}
+
 func (app *Config) GetItems(w http.ResponseWriter, r *http.Request) {
 	app.Mutex.Lock()
 	defer app.Mutex.Unlock()
