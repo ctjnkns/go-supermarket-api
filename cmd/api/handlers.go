@@ -20,7 +20,7 @@ func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.GetDatabaseItem(product.Code)
 	if err != nil {
-		err := app.errorJSON(w, err)
+		err := app.errorJSON(w, err, http.StatusNotFound)
 		if err != nil {
 			log.Printf("Problem with errorJSON: %s", err)
 		}
@@ -141,7 +141,7 @@ func (app *Config) DeleteItem(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.DeleteDatabaseItem(product.Code)
 	if err != nil {
-		err := app.errorJSON(w, err)
+		err := app.errorJSON(w, err, http.StatusNotFound)
 		if err != nil {
 			log.Printf("Problem with errorJSON: %s", err)
 		}
@@ -207,7 +207,7 @@ func (app *Config) UpdateItem(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.UpdateDatabaseItem(product)
 	if err != nil {
-		err := app.errorJSON(w, err)
+		err := app.errorJSON(w, err, http.StatusNotFound)
 		if err != nil {
 			log.Printf("Problem with errorJSON: %s", err)
 		}

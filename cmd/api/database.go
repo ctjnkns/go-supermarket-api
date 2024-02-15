@@ -120,12 +120,12 @@ func (app *Config) AddDatabaseItem(product Product) (Product, error) {
 
 	product, err := NewProduct(product.Code, product.Name, product.Price)
 	if err != nil {
-		return product, errors.New(fmt.Sprintf("Unable to create product: %s", err))
+		return product, fmt.Errorf("Unable to create product: %s", err)
 	}
 
 	//look up the item to see if it already exists, we don't want to add duplicates.
 	if _, ok := app.Database[product.Code]; ok {
-		return product, errors.New(fmt.Sprintf("Duplicate item: %s", product.Code))
+		return product, fmt.Errorf("Duplicate item: %s", product.Code)
 	}
 
 	app.Database[product.Code] = product
@@ -143,10 +143,10 @@ func (app *Config) AddDatabaseItems(products Products) (Products, error) {
 	for _, product := range products.Products {
 		product, err := NewProduct(product.Code, product.Name, product.Price)
 		if err != nil {
-			return response, errors.New(fmt.Sprintf("Unable to create product: %s", err))
+			return response, fmt.Errorf("Unable to create product: %s", err)
 		}
 		if _, ok := app.Database[product.Code]; ok {
-			return response, errors.New(fmt.Sprintf("Duplicate item: %s", product.Code))
+			return response, fmt.Errorf("Duplicate item: %s", product.Code)
 		}
 
 		app.Database[product.Code] = product
@@ -164,12 +164,12 @@ func (app *Config) GetDatabaseItem(code string) (Product, error) {
 
 	err := VerifyCode(code)
 	if err != nil {
-		return product, errors.New(fmt.Sprintf("Unable to verify code: %s", err))
+		return product, fmt.Errorf("Unable to verify code: %s", err)
 	}
 
 	product, ok := app.Database[code]
 	if !ok {
-		return product, errors.New(fmt.Sprintf("Item not found: %s", code))
+		return product, fmt.Errorf("Item not found: %s", code)
 	}
 
 	return product, nil
@@ -180,6 +180,9 @@ func (app *Config) GetDatabaseItems() (map[string]Product, error) {
 	defer app.Mutex.Unlock()
 
 	products := app.Database
+	if products == nil {
+		return nil, errors.New("Error: empty database")
+	}
 
 	return products, nil
 }
@@ -192,12 +195,12 @@ func (app *Config) DeleteDatabaseItem(code string) (Product, error) {
 
 	err := VerifyCode(code)
 	if err != nil {
-		return product, errors.New(fmt.Sprintf("Unable to verify code: %s", err))
+		return product, fmt.Errorf("Unable to verify code: %s", err)
 	}
 
 	product, ok := app.Database[code]
 	if !ok {
-		return product, errors.New(fmt.Sprintf("Item not found: %s", code))
+		return product, fmt.Errorf("Item not found: %s", code)
 	}
 
 	delete(app.Database, code)
@@ -214,11 +217,11 @@ func (app *Config) DeleteDatabaseItems(products Products) (Products, error) {
 	for _, product := range products.Products {
 		err := VerifyCode(product.Code)
 		if err != nil {
-			return response, errors.New(fmt.Sprintf("Unable to verify code: %s", err))
+			return response, fmt.Errorf("Unable to verify code: %s", err)
 		}
 		product, ok := app.Database[product.Code]
 		if !ok {
-			return response, errors.New(fmt.Sprintf("Item not found: %s", product.Code))
+			return response, fmt.Errorf("Item not found: %s", product.Code)
 		}
 
 		delete(app.Database, product.Code)
@@ -234,13 +237,13 @@ func (app *Config) UpdateDatabaseItem(product Product) (Product, error) {
 
 	product, err := NewProduct(product.Code, product.Name, product.Price)
 	if err != nil {
-		return product, errors.New(fmt.Sprintf("Unable to create product: %s", err))
+		return product, fmt.Errorf("Unable to create product: %s", err)
 	}
 
 	//look up the item to make sure it exists.
 	product, ok := app.Database[product.Code]
 	if !ok {
-		return product, errors.New(fmt.Sprintf("Item not found: %s", product.Code))
+		return product, fmt.Errorf("Item not found: %s", product.Code)
 	}
 
 	app.Database[product.Code] = product
@@ -257,11 +260,11 @@ func (app *Config) UpdateDatabaseItems(products Products) (Products, error) {
 	for _, product := range products.Products {
 		err := VerifyCode(product.Code)
 		if err != nil {
-			return response, errors.New(fmt.Sprintf("Unable to verify code: %s", err))
+			return response, fmt.Errorf("Unable to verify code: %s", err)
 		}
 		product, ok := app.Database[product.Code]
 		if !ok {
-			return response, errors.New(fmt.Sprintf("Item not found: %s", product.Code))
+			return response, fmt.Errorf("Item not found: %s", product.Code)
 		}
 
 		app.Database[product.Code] = product
