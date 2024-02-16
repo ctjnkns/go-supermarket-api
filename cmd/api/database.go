@@ -243,9 +243,8 @@ func (app *Config) UpdateDatabaseItem(product Product) (Product, error) {
 	}
 
 	//look up the item to make sure it exists.
-	product, ok := app.Database[product.Code]
-	if !ok {
-		return product, fmt.Errorf("Item not found: %s", product.Code)
+	if response, ok := app.Database[product.Code]; !ok {
+		return response, fmt.Errorf("Item not found: %s", product.Code)
 	}
 
 	app.Database[product.Code] = product
@@ -262,11 +261,10 @@ func (app *Config) UpdateDatabaseItems(products Products) (Products, error) {
 	for _, product := range products.Products {
 		err := VerifyCode(product.Code)
 		if err != nil {
-			return response, fmt.Errorf("Unable to verify code: %s", err)
+			return response, fmt.Errorf("unable to verify code: %s", err)
 		}
-		product, ok := app.Database[product.Code]
-		if !ok {
-			return response, fmt.Errorf("Item not found: %s", product.Code)
+		if _, ok := app.Database[product.Code]; !ok {
+			return response, fmt.Errorf("item not found: %s", product.Code)
 		}
 
 		app.Database[product.Code] = product
