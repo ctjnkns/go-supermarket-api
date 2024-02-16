@@ -15,5 +15,5 @@ jobs:
               run: |
                 curl --request GET 'http://localhost:8080/getitem' \
                     --header 'Content-Type: application/json' \
-                    --data '{ "code": "A12T-4GH7-QPL9-9999" }'
+                    --data '{ "code": "A12T-4GH7-QPL9-3N4M" }'
 
