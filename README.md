@@ -9,8 +9,6 @@
 
 ### Working with Single Items
 
-```
-
 #### Getting a specific item
 
 A specific item can be looked up by it's product code.
