@@ -85,8 +85,10 @@ func VerifyPrice(price float32) error {
 }
 
 type Config struct {
-	Mutex    sync.Mutex
-	Database map[string]Product
+	Mutex              sync.Mutex
+	Database           map[string]Product
+	MasJSONSize        int
+	AllowUnknownFields bool
 }
 
 func (app *Config) init() {
