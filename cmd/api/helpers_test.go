@@ -108,5 +108,4 @@ func TestTools_ErrorJSON(t *testing.T) {
 	if rr.Code != http.StatusServiceUnavailable {
 		t.Errorf("wrong status code returned; expected 503, but got %d", rr.Code)
 	}
-
 }
