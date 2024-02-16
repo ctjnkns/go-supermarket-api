@@ -45,7 +45,7 @@ If the item is not found, a 404 not found error is returned.
 
 An item can be created by sending the item details in a json post request.
 ```shell
-curl --location 'http://localhost:8080/additem' \
+curl 'http://localhost:8080/additem' \
 --header 'Content-Type: application/json' \
 --data '{
         "code": "A12T-4GH7-QPL9-9999",
@@ -54,7 +54,7 @@ curl --location 'http://localhost:8080/additem' \
 }'
 ```
 
-The details of the itme are returned along with status code 200. If the request is mi
+The details of the itme are returned along with status code 200. 
 ```json
 {
     "error": false,
@@ -77,7 +77,7 @@ If there is an error in the format of the json or the item details, an error mes
 
 #### Updating an existing item
 ```shell
-curl --location 'http://localhost:8080/updateitem' \
+curl 'http://localhost:8080/updateitem' \
 --header 'Content-Type: application/json' \
 --data '{
         "code": "A12T-4GH7-QPL9-9999",
@@ -108,7 +108,7 @@ If the request is not properly formatted or the item is not found, a 400 or 404 
         "price": 1.29
 }
 ```
-404
+
 ```json
 {
     "error": true,
@@ -185,7 +185,7 @@ The response will contain a bool value indicating whehter or not there was an er
 
 #### Adding multiple items
 ```shell
-curl --location 'http://localhost:8080/additems' \
+curl 'http://localhost:8080/additems' \
 --data '{
     "products": [
         {
@@ -328,7 +328,7 @@ If any of the items don't exist, an error is returned.
 
 Items can be searched for using a query parameter. Partial matches will result in a success, and a list of all matches is returned.
 ```shell
-curl --location 'http://localhost:8080/search?item=g'
+curl 'http://localhost:8080/search?item=g'
 ```
 
 ```json
@@ -354,7 +354,7 @@ curl --location 'http://localhost:8080/search?item=g'
 
 
 ```shell
-curl --location 'http://localhost:8080/search?item=green'
+curl 'http://localhost:8080/search?item=green'
 ```
 
 ```json
@@ -374,7 +374,7 @@ curl --location 'http://localhost:8080/search?item=green'
 ```
 
 ```shell
-curl --location 'http://localhost:8080/search?item=greenapples'
+curl 'http://localhost:8080/search?item=greenapples'
 ```
 
 ```json
