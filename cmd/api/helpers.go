@@ -50,7 +50,7 @@ func (app *Config) ReadJSON(w http.ResponseWriter, r *http.Request, data interfa
 			return errors.New("body must not be empty")
 		case strings.HasPrefix(err.Error(), "json: unknown field"):
 			fieldName := strings.TrimPrefix(err.Error(), "json: unknown field")
-			return fmt.Errorf("body contains unkown key %s", fieldName)
+			return fmt.Errorf("body contains unknown key %s", fieldName)
 		case err.Error() == "http: request body too large":
 			return fmt.Errorf("body must not be larger than %d bytes", maxBytes)
 		case errors.As(err, &invalidUnmarshalError):

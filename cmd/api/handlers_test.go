@@ -9,8 +9,6 @@ import (
 	"testing"
 )
 
-type searchQuery string
-
 var handlerTests = []struct {
 	name               string
 	url                string
@@ -103,6 +101,10 @@ func TestHandlers(t *testing.T) {
 			if resp.StatusCode != e.expectedStatusCode {
 				t.Errorf("for %s, expected %d but got %d", e.name, e.expectedStatusCode, resp.StatusCode)
 			}
+			err = resp.Body.Close()
+			if err != nil {
+				t.Error(err)
+			}
 		} else {
 			resp, err := ts.Client().Get(ts.URL + e.url + "?item=green")
 			if err != nil {
@@ -111,6 +113,10 @@ func TestHandlers(t *testing.T) {
 			}
 			if resp.StatusCode != e.expectedStatusCode {
 				t.Errorf("for %s, expected %d but got %d", e.name, e.expectedStatusCode, resp.StatusCode)
+			}
+			err = resp.Body.Close()
+			if err != nil {
+				t.Error(err)
 			}
 		}
 	}

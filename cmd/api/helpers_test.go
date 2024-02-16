@@ -36,7 +36,7 @@ func Test_ReadJSON(t *testing.T) {
 		// set the max file size
 		app.MasJSONSize = e.maxSize
 
-		// set allos unkown fields
+		// set allow unknown fields
 		app.AllowUnknownFields = e.allowUnknown
 
 		//declare a variable to read the decoded json into
@@ -63,7 +63,10 @@ func Test_ReadJSON(t *testing.T) {
 			t.Errorf("%s: error not expected, but one received: %s", e.name, err.Error())
 		}
 
-		req.Body.Close()
+		err = req.Body.Close()
+		if err != nil {
+			t.Error(err)
+		}
 
 	}
 }
@@ -98,7 +101,7 @@ func Test_ErrorJSON(t *testing.T) {
 	decoder := json.NewDecoder(rr.Body)
 	err = decoder.Decode(&payload)
 	if err != nil {
-		t.Error("recieved error when decoding JSON", err)
+		t.Error("received error when decoding JSON", err)
 	}
 
 	if !payload.Error {
