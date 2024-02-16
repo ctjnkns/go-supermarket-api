@@ -29,7 +29,7 @@ var jsonTests = []struct {
 	{name: "file too large", json: `Hello, world!`, errorExpected: true, maxSize: 1024, allowUnknown: true},
 }
 
-func TestTools_ReadJSON(t *testing.T) {
+func Test_ReadJSON(t *testing.T) {
 	var app Config
 	for _, e := range jsonTests {
 
@@ -68,7 +68,7 @@ func TestTools_ReadJSON(t *testing.T) {
 	}
 }
 
-func TestTools_WriteJSON(t *testing.T) {
+func Test_WriteJSON(t *testing.T) {
 	var app Config
 
 	rr := httptest.NewRecorder()
@@ -85,7 +85,7 @@ func TestTools_WriteJSON(t *testing.T) {
 	}
 }
 
-func TestTools_ErrorJSON(t *testing.T) {
+func Test_ErrorJSON(t *testing.T) {
 	var app Config
 
 	rr := httptest.NewRecorder()

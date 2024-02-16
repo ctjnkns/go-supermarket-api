@@ -3,10 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
-	"log"
 	"regexp"
 	"strings"
-	"sync"
 )
 
 type Product struct {
@@ -28,9 +26,9 @@ func NewProduct(code string, name string, price float32) (Product, error) {
 	code = strings.ToUpper(code)
 	name = strings.ToLower(name)
 
-	r := regexp.MustCompile("^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}$")
-	if ok := r.MatchString(code); !ok {
-		return Product{}, errors.New("Incorrect Product Code Format")
+	err := VerifyCode(code)
+	if err != nil {
+		return Product{}, fmt.Errorf("Unable to verify code: %s", err)
 	}
 
 	return Product{code, name, price}, nil
@@ -84,19 +82,7 @@ func VerifyPrice(price float32) error {
 	return nil
 }
 
-type Config struct {
-	Mutex              sync.Mutex
-	Database           map[string]Product
-	MasJSONSize        int
-	AllowUnknownFields bool
-}
-
-func (app *Config) init() {
-	app.Database = make(map[string]Product)
-	app.DefaultValues()
-}
-
-func (app *Config) DefaultValues() {
+func (app *Config) InitializeDatabase() error {
 	initalProducts := []Product{
 		{"a12T-4GH7-QPL9-3N4M", "Lettuce", 3.46}, //lower case a to test toUpper
 		{"E5T6-9UI3-TH15-QR88", "Peach", 2.99},
@@ -107,13 +93,14 @@ func (app *Config) DefaultValues() {
 	for _, product := range initalProducts {
 		p, err := NewProduct(product.Code, product.Name, product.Price)
 		if err != nil {
-			log.Printf("Unable to create product: %s: %s\n", product, err)
+			return fmt.Errorf("Unable to create product: %s: %s\n", product, err)
 		}
 		_, err = app.AddDatabaseItem(p)
 		if err != nil {
-			log.Printf("Unable to add product to database: %s:  %s\n", product, err)
+			return fmt.Errorf("Unable to add product to database: %s:  %s\n", product, err)
 		}
 	}
+	return nil
 }
 
 func (app *Config) AddDatabaseItem(product Product) (Product, error) {
@@ -140,6 +127,9 @@ func (app *Config) AddDatabaseItems(products Products) (Products, error) {
 	defer app.Mutex.Unlock()
 
 	var response Products
+	if len(products.Products) < 1 {
+		return response, fmt.Errorf("pass in at least one product")
+	}
 
 	//look up the item to see if it already exists, we don't want to add duplicates.
 	for _, product := range products.Products {
@@ -215,6 +205,9 @@ func (app *Config) DeleteDatabaseItems(products Products) (Products, error) {
 	defer app.Mutex.Unlock()
 
 	var response Products
+	if len(products.Products) < 1 {
+		return response, fmt.Errorf("pass in at least one product")
+	}
 
 	for _, product := range products.Products {
 		err := VerifyCode(product.Code)
@@ -257,6 +250,10 @@ func (app *Config) UpdateDatabaseItems(products Products) (Products, error) {
 	defer app.Mutex.Unlock()
 
 	var response Products
+
+	if len(products.Products) < 1 {
+		return response, fmt.Errorf("pass in at least one product")
+	}
 
 	for _, product := range products.Products {
 		err := VerifyCode(product.Code)
