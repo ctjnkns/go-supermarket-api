@@ -54,7 +54,7 @@ curl --location 'http://localhost:8080/additem' \
 }'
 ```
 
-The details of the itme are returned along with status code 200. If the request is mi
+The details of the itme are returned along with status code 200. 
 ```json
 {
     "error": false,
