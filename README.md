@@ -108,7 +108,7 @@ If the request is not properly formatted or the item is not found, a 400 or 404 
         "price": 1.29
 }
 ```
-404
+
 ```json
 {
     "error": true,
