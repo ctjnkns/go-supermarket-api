@@ -30,6 +30,14 @@ func NewProduct(code string, name string, price float32) (Product, error) {
 	if err != nil {
 		return Product{}, fmt.Errorf("Unable to verify code: %s", err)
 	}
+	err = VerifyName(name)
+	if err != nil {
+		return Product{}, fmt.Errorf("Unable to verify name: %s", err)
+	}
+	err = VerifyPrice(price)
+	if err != nil {
+		return Product{}, fmt.Errorf("Unable to verify price: %s", err)
+	}
 
 	return Product{code, name, price}, nil
 }
@@ -67,9 +75,9 @@ func VerifyCode(code string) error {
 }
 
 func VerifyName(name string) error {
-	upperName := strings.ToLower(name)
-	if upperName != name {
-		return errors.New("Product Name should be lowercase")
+	lowerName := strings.ToLower(name)
+	if lowerName == "" {
+		return errors.New("Name must be provided")
 	}
 
 	return nil

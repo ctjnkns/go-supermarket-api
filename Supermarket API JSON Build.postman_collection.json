@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "6f302b73-9e20-49ce-8d46-1c698ae02972",
+		"name": "Supermarket API JSON Build",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30655896"
+	},
+	"item": [
+		{
+			"name": "Get Produce Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/getitems",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"getitems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Produce Item",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/getitem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"getitem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Produce Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\",\r\n        \"name\": \"Spinach\",\r\n        \"price\": 1.29\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/additem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"additem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Produce Items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9997\",\r\n                \"name\": \"Cauliflower\",\r\n                \"price\": 100.99\r\n        },\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9998\",\r\n                \"name\": \"Broccoli\",\r\n                \"price\": 1.33\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/additems",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"additems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Produce Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/deleteitem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"deleteitem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Produce Items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9997\"\r\n        },\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9998\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/deleteitems",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"deleteitems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Produce Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\",\r\n        \"name\": \"Tuna\",\r\n        \"price\": 1.29\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/updateitem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"updateitem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Produce Items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9997\",\r\n                \"name\": \"Twinkies\",\r\n                \"price\": 100.99\r\n        },\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9998\",\r\n                \"name\": \"Slushies\",\r\n                \"price\": 1.33\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/updateitems",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"updateitems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Produce Item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/search?item=spin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "item",
+							"value": "spin"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
