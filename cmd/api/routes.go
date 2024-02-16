@@ -35,5 +35,7 @@ func (app *Config) routes() http.Handler {
 	mux.Post("/updateitem", app.UpdateItem)
 	mux.Post("/updateitems", app.UpdateItems)
 
+	mux.Get("/search", app.Search)
+
 	return mux
 }

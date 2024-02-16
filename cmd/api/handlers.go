@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
@@ -249,6 +250,31 @@ func (app *Config) UpdateItems(w http.ResponseWriter, r *http.Request) {
 	payload := JSONResponse{
 		Error:   false,
 		Message: "Updated multiple products",
+		Data:    response,
+	}
+
+	err = app.WriteJSON(w, http.StatusOK, payload)
+	if err != nil {
+		log.Printf("Problem with WriteJSON: %s", err)
+	}
+}
+
+func (app *Config) Search(w http.ResponseWriter, r *http.Request) {
+	searchString := r.URL.Query().Get("item")
+	searchString = strings.ToLower(searchString)
+
+	response, err := app.SearchDatabaseItem(searchString)
+	if err != nil {
+		err := app.ErrorJSON(w, err, http.StatusNotFound)
+		if err != nil {
+			log.Printf("Problem with ErrorJSON: %s", err)
+		}
+		return
+	}
+
+	payload := JSONResponse{
+		Error:   false,
+		Message: "List Products",
 		Data:    response,
 	}
 
