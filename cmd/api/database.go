@@ -271,15 +271,18 @@ func (app *Config) UpdateDatabaseItems(products Products) (Products, error) {
 	return response, nil
 }
 
-func (app *Config) SearchDatabaseItem(searchString string) (Product, error) {
+func (app *Config) SearchDatabaseItem(searchString string) (Products, error) {
 	app.Mutex.Lock()
 	defer app.Mutex.Unlock()
 
+	var products Products
 	for _, product := range app.Database {
 		if strings.Contains(product.Name, searchString) {
-			return product, nil
+			products.Products = append(products.Products, product)
 		}
 	}
-
-	return Product{}, fmt.Errorf("item not found")
+	if len(products.Products) < 1 {
+		return Products{}, fmt.Errorf("item not found")
+	}
+	return products, nil
 }

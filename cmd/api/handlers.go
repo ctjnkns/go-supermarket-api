@@ -274,7 +274,7 @@ func (app *Config) Search(w http.ResponseWriter, r *http.Request) {
 
 	payload := JSONResponse{
 		Error:   false,
-		Message: fmt.Sprintf("List product: %s", response.Code),
+		Message: "List Products",
 		Data:    response,
 	}
 
