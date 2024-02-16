@@ -237,7 +237,6 @@ func (app *Config) UpdateItems(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
 	response, err := app.UpdateDatabaseItems(products)
 	if err != nil {
 		err := app.ErrorJSON(w, err)
