@@ -17,4 +17,4 @@ RUN mkdir /app
 
 COPY --from=builder /app/superMarketAPI /app
 
-CMD [ "/app/superMarketAPI" ]
+ENTRYPOINT [ "/app/superMarketAPI" ]

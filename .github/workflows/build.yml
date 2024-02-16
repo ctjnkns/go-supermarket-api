@@ -1,0 +1,19 @@
+name: build-docker-compose
+on: 
+    pull_request:
+        branches:
+            - "*"
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Build
+              run: docker compose up -d
+            - name: Test-API
+              run: |
+                curl --request GET 'http://localhost:8080/getitem' \
+                    --header 'Content-Type: application/json' \
+                    --data '{ "code": "A12T-4GH7-QPL9-9999" }'
+
