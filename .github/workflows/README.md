@@ -1,13 +1,13 @@
 
-#Workflow Settings
+# Workflow Settings
 Currently most workflows are configured to run when a pull request is created. Merges are still allowed in the case where workflows fail since this branch is still in development. Commits directly to the main branch are not permittted.
 
-#Workflows
+# Workflows
 
-##Lint Tests
+## Lint Tests
 The Lint test workflow runs the [golangci-lint](golangci-lint) tool using the configured linters and settings specified in the .golangic.toml file.
 
-##Unit Tests
+## Unit Tests
 There is extensive unit testing using Go's built in testing library. Each file has an associated test file where each function is tested for expected inputs and ouptus and to confirm that the code is safe and consistent. 
 
 For the main server file, the functions to initialize the server and database with default values are tested to make sure there will be no errors during setup:
@@ -47,7 +47,7 @@ For the json helper library, a variety of verbose errors are tested to provide a
 
 Unit tests for the database still need to be implemented. 
 
-##Build
+## Build
 The build workflow builds the docker container based on the docker-compose.yml and Dockerfile configratuion. A curl request is run to confirm that the server is responding and the database was initialized with default data as expected.
 ```yml
             - name: Build
@@ -59,5 +59,5 @@ The build workflow builds the docker container based on the docker-compose.yml a
                     --data '{ "code": "A12T-4GH7-QPL9-3N4M" }'
 ```
 
-##Publish
+## Publish
 The publish build logs into dockerhub using secrets stored in the Github secrets repository, and then builds and publishes the docker image to dockerhub. This workflow runs manually but can be updated in the future to run on a commit to main or when a new module/release is tagged. It can also be configured to require a successful run of the build workflow to confirm that the dockerfile is correct. 
