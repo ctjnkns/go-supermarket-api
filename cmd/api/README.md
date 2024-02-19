@@ -114,3 +114,4 @@ The helpers are just functions that take in the http respone writer and rquest a
 #Improvements
 - Pagination for the items functions, such as getitems.
 - Partial failiures on functions with multiple items.
+- URLs should be something like /api/v1/
