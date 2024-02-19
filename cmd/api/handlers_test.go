@@ -18,18 +18,23 @@ var handlerTests = []struct {
 	searchTest         bool
 }{
 	{"Get Items", "/getitems", "GET", Product{}, http.StatusOK, false},
-	{"Get Item Not Found", "/getitem", "GET", Product{}, http.StatusNotFound, false},
+	{"Get Item Bad Request", "/getitem", "GET", Product{}, http.StatusBadRequest, false},
+	{"Get Item Not Found", "/getitem", "GET", Product{"E5T6-9UI3-TH15-QRZZ", "Peach", 2.99}, http.StatusNotFound, false},
 	{"Get Item", "/getitem", "GET", Product{"A12T-4GH7-QPL9-3N4M", "lettuce", 3.46}, http.StatusOK, false},
 	{"Get Item 2", "/getitem", "GET", Product{"E5T6-9UI3-TH15-QR88", "Peach", 2.99}, http.StatusOK, false},
 
-	{"Add Item Not Found", "/additem", "POST", Product{}, http.StatusBadRequest, false},
+	{"Add Item Bad Request", "/additem", "POST", Product{}, http.StatusBadRequest, false},
 	{"Add Item", "/additem", "POST", Product{"A12T-4GH7-QPL9-9999", "Spinach", 1.29}, http.StatusOK, false},
-	{"Update Item Not Found", "/updateitem", "POST", Product{}, http.StatusNotFound, false},
+
+	{"Update Item Bad Request", "/updateitem", "POST", Product{}, http.StatusBadRequest, false},
+	{"Update Item Not Found", "/updateitem", "POST", Product{"E5T6-9UI3-TH15-QRZZ", "Peach", 2.99}, http.StatusNotFound, false},
 	{"Update Item", "/updateitem", "POST", Product{"A12T-4GH7-QPL9-9999", "Tuna", 1.29}, http.StatusOK, false},
-	{"Delete Item Not Found", "/deleteitem", "POST", Product{}, http.StatusNotFound, false},
+
+	{"Delete Item Bad Request", "/deleteitem", "POST", Product{}, http.StatusBadRequest, false},
+	{"Delete Item Not Found", "/deleteitem", "POST", Product{"E5T6-9UI3-TH15-QRZZ", "Peach", 2.99}, http.StatusNotFound, false},
 	{"Delete Item", "/deleteitem", "POST", Product{"A12T-4GH7-QPL9-9999", "Tuna", 1.29}, http.StatusOK, false},
 
-	{"Add Items Not Found", "/additems", "POST", Products{}, http.StatusBadRequest, false},
+	{"Add Items Bad Request", "/additems", "POST", Products{}, http.StatusBadRequest, false},
 	{"Add Items", "/additems", "POST", Products{
 		[]Product{
 			{

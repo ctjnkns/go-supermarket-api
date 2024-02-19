@@ -296,6 +296,8 @@ func (app *Config) SearchDatabaseItem(searchString string) (Products, error) {
 	app.Mutex.Lock()
 	defer app.Mutex.Unlock()
 
+	searchString = strings.ToLower(searchString)
+
 	var products Products
 	for _, product := range app.Database {
 		if strings.Contains(product.Name, searchString) {
