@@ -97,7 +97,7 @@ func VerifyName(name string) error {
 }
 
 func VerifyPrice(price float32) error {
-	if price < 0 {
+	if price < 0.01 {
 		return errors.New("Nothing is free here")
 	}
 	return nil
