@@ -111,7 +111,7 @@ The helpers are just functions that take in the http respone writer and rquest a
 - ErrorJSON is used to return error status codes when API calls fail or return errors. It takes an http response writer, error message, and status and writes the JSON to the response writer.
 
 
-#Improvements
+# Improvements
 - Pagination for the items functions, such as getitems.
 - Partial failiures on functions with multiple items.
 - URLs should be something like /api/v1/
