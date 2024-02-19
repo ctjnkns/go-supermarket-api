@@ -60,4 +60,6 @@ The build workflow builds the docker container based on the docker-compose.yml a
 ```
 
 ## Publish
-The publish build logs into dockerhub using secrets stored in the Github secrets repository, and then builds and publishes the docker image to dockerhub. This workflow runs manually but can be updated in the future to run on a commit to main or when a new module/release is tagged. It can also be configured to require a successful run of the build workflow to confirm that the dockerfile is correct. 
+The publish build logs into dockerhub using secrets stored in the Github secrets repository, and then builds and publishes the docker image to [Docker Hub](https://hub.docker.com/repository/docker/ctjnkns/supermarket-api/general). This workflow runs manually but can be updated in the future to run on a commit to main or when a new module/release is tagged. It can also be configured to require a successful run of the build workflow to confirm that the dockerfile is correct. 
+
+
