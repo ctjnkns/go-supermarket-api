@@ -17,6 +17,14 @@ The server has a Config struct to provide access to the in-memory database, mute
 The database file contains the go structs for products/items and a dictionary of products that is used as the database for the API. 
 
 ### Product Struct
+```
+type Product struct {
+	Code  string  `json:"code"`
+	Name  string  `json:"name,omitempty"`
+	Price float32 `json:"price,omitempty"`
+}
+
+```
 The product struct contains three varaibles:
 - A Code that is sixteen case-insensitive alphanumeric characters separated by dashes into four groups. The code format is verified using regex.
 - A Name that is an alphnumeric string. The name is converted into lowercase before being used or stored in the dictionary for consistency. Names can also be used to search for items in the database using the /search call.
@@ -25,9 +33,17 @@ The product struct contains three varaibles:
 There is a NewProduct function which takes a Code, Name, and Price as input, verifies the format, converts to upper/lower case as needed, and returns a correctly formatted Product. There are also VerifyProduct, VerifyCode, VerifyName, and VerifyPrice functions that will check the validity of each parameter and return useful errors.
 
 There is also a Products struct that is simply a slice of Product structs.
+```
+type Products struct {
+	Products []Product `json:"products"`
+}
+```
 
 ### Database Struct
 The database struct is a map that uses the Product Code as the key so items can be looked up in constant time. The value for the dictionary is a Prodcut struct. 
+```
+Database = make(map[string]Product)
+```
 
 It is inialized with the products specified in the gist:
 ```
@@ -60,7 +76,6 @@ There is a custom error type: "NewErrNotFound", which is used to identify errors
 The various functions for working with mutliple items all take in a Products struct, which is a slice of Product structs, and return details about the Products and potentially an error. The execption to this is getitems, which does not take in any parameters since it returns all products in the database.
 
 In the case of Add and Update, the products that are passed into the function must contain a Code, Name, and Price. In the case of Get and Delete, the slice of Product structs only require the code. When an operation succeeds, error is returned as nil. 
-
 
 The general workflow for each function is to:
 1. Lock the database mutex
