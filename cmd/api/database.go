@@ -22,6 +22,19 @@ func (p Product) String() string {
 	return fmt.Sprintf("%s: $%.2f", p.Name, p.Price)
 }
 
+type ErrNotFound struct {
+	message string
+}
+
+func NewErrNotFound(message string) *ErrNotFound {
+	return &ErrNotFound{
+		message: message,
+	}
+}
+func (e *ErrNotFound) Error() string {
+	return e.message
+}
+
 func NewProduct(code string, name string, price float32) (Product, error) {
 	code = strings.ToUpper(code)
 	name = strings.ToLower(name)
@@ -169,7 +182,7 @@ func (app *Config) GetDatabaseItem(code string) (Product, error) {
 
 	product, ok := app.Database[code]
 	if !ok {
-		return product, fmt.Errorf("Item not found: %s", code)
+		return product, NewErrNotFound(fmt.Sprintf("Item not found: %s", code))
 	}
 
 	return product, nil
@@ -200,7 +213,7 @@ func (app *Config) DeleteDatabaseItem(code string) (Product, error) {
 
 	product, ok := app.Database[code]
 	if !ok {
-		return product, fmt.Errorf("Item not found: %s", code)
+		return product, NewErrNotFound(fmt.Sprintf("Item not found: %s", code))
 	}
 
 	delete(app.Database, code)
@@ -222,9 +235,9 @@ func (app *Config) DeleteDatabaseItems(products Products) (Products, error) {
 		if err != nil {
 			return response, fmt.Errorf("Unable to verify code: %s", err)
 		}
-		product, ok := app.Database[product.Code]
+		_, ok := app.Database[product.Code]
 		if !ok {
-			return response, fmt.Errorf("Item not found: %s", product.Code)
+			return response, NewErrNotFound(fmt.Sprintf("Item not found: %s", product.Code))
 		}
 
 		delete(app.Database, product.Code)
@@ -245,7 +258,7 @@ func (app *Config) UpdateDatabaseItem(product Product) (Product, error) {
 
 	//look up the item to make sure it exists.
 	if response, ok := app.Database[product.Code]; !ok {
-		return response, fmt.Errorf("Item not found: %s", product.Code)
+		return response, NewErrNotFound(fmt.Sprintf("Item not found: %s", product.Code))
 	}
 
 	app.Database[product.Code] = product
@@ -269,7 +282,7 @@ func (app *Config) UpdateDatabaseItems(products Products) (Products, error) {
 			return response, fmt.Errorf("unable to verify code: %s", err)
 		}
 		if _, ok := app.Database[product.Code]; !ok {
-			return response, fmt.Errorf("item not found: %s", product.Code)
+			return response, NewErrNotFound(fmt.Sprintf("Item not found: %s", product.Code))
 		}
 
 		app.Database[product.Code] = product
@@ -290,7 +303,7 @@ func (app *Config) SearchDatabaseItem(searchString string) (Products, error) {
 		}
 	}
 	if len(products.Products) < 1 {
-		return Products{}, fmt.Errorf("item not found")
+		return Products{}, NewErrNotFound(fmt.Sprintf("Item not found: %s", searchString))
 	}
 	return products, nil
 }
