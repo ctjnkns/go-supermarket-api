@@ -11,7 +11,7 @@ The Lint test workflow runs the [golangci-lint](golangci-lint) tool using the co
 There is extensive unit testing using Go's built in testing library. Each file has an associated test file where each function is tested for expected inputs and ouptus and to confirm that the code is safe and consistent. 
 
 For the main server file, the functions to initialize the server and database with default values are tested to make sure there will be no errors during setup:
-```json
+```
 func Test_Init(t *testing.T) {
 	var app Config
 	err := app.init()
@@ -22,14 +22,14 @@ func Test_Init(t *testing.T) {
 ```
 
 For http handlers, a variety of errors are tested to confirm the http status codes are working as expected:
-```json
+```
 	{"Get Items", "/getitems", "GET", Product{}, http.StatusOK, false},
 	{"Get Item Bad Request", "/getitem", "GET", Product{}, http.StatusBadRequest, false},
 	{"Get Item Not Found", "/getitem", "GET", Product{"E5T6-9UI3-TH15-QRZZ", "Peach", 2.99}, http.StatusNotFound, false},
 ```
 
 For the json helper library, a variety of verbose errors are tested to provide as much useful information as possible.
-```json
+```
 {
 	{name: "good json", json: `{"foo": "bar"}`, errorExpected: false, maxSize: 1024, allowUnknown: false},
 	{name: "badly formatted json", json: `{"foo":}`, errorExpected: true, maxSize: 1024, allowUnknown: false},
