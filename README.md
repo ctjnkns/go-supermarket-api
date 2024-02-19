@@ -1,4 +1,5 @@
 # go-supermarket-api
+This readme goes over basic usage of the API. For details on the Github Workflows and server design, there are readmes in each respective subfolder.
 
 ## Setup
 - Run `docker compose up -d` to run the docker container.
