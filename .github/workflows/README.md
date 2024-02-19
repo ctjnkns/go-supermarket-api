@@ -1,6 +1,6 @@
 
 # Workflow Settings
-Currently most workflows are configured to run when a pull request is created. Merges are still allowed in the case where workflows fail since this branch is still in development. Commits directly to the main branch are not permittted.
+Currently most workflows are configured to run when a pull request is created. Merges are still allowed in the case where workflows fail since this app is still in development. Commits directly to the main branch are not permittted.
 
 # Workflows
 
