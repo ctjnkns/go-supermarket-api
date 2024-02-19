@@ -98,7 +98,57 @@
 			},
 			"response": [
 				{
-					"name": "Get Produce Item Error",
+					"name": "Get Produce Item Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/getitem",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"getitem"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Feb 2024 15:29:55 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "129"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": false,\n    \"message\": \"List product: A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"spinach\",\n        \"price\": 1.29\n    }\n}"
+				},
+				{
+					"name": "Get Produce Item Not Found",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
@@ -148,13 +198,13 @@
 					"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: A12T-4GH7-QPL9-9999\"\n}"
 				},
 				{
-					"name": "Get Produce Item Success",
+					"name": "Get Produce Item Bad Request",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\"\r\n}",
+							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-999\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,8 +223,8 @@
 							]
 						}
 					},
-					"status": "OK",
-					"code": 200,
+					"status": "Bad Request",
+					"code": 400,
 					"_postman_previewlanguage": "json",
 					"header": [
 						{
@@ -187,15 +237,15 @@
 						},
 						{
 							"key": "Date",
-							"value": "Fri, 16 Feb 2024 15:29:55 GMT"
+							"value": "Mon, 19 Feb 2024 15:25:17 GMT"
 						},
 						{
 							"key": "Content-Length",
-							"value": "129"
+							"value": "79"
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"error\": false,\n    \"message\": \"List product: A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"spinach\",\n        \"price\": 1.29\n    }\n}"
+					"body": "{\n    \"error\": true,\n    \"message\": \"Unable to verify code: Incorrect Product Code Format\"\n}"
 				}
 			]
 		},
@@ -226,6 +276,56 @@
 				}
 			},
 			"response": [
+				{
+					"name": "Add Produce Item Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\",\r\n        \"name\": \"Spinach\",\r\n        \"price\": 1.29\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/additem",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"additem"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Feb 2024 15:28:56 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "121"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": false,\n    \"message\": \"Added A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"spinach\",\n        \"price\": 1.29\n    }\n}"
+				},
 				{
 					"name": "Add Produce Item Code Error",
 					"originalRequest": {
@@ -325,56 +425,6 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"error\": true,\n    \"message\": \"Unable to create product: Unable to verify name: Name must be provided\"\n}"
-				},
-				{
-					"name": "Add Produce Item Success",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\",\r\n        \"name\": \"Spinach\",\r\n        \"price\": 1.29\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/additem",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"additem"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Vary",
-							"value": "Origin"
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 16 Feb 2024 15:28:56 GMT"
-						},
-						{
-							"key": "Content-Length",
-							"value": "121"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"error\": false,\n    \"message\": \"Added A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"spinach\",\n        \"price\": 1.29\n    }\n}"
 				}
 			]
 		},
@@ -535,7 +585,7 @@
 			},
 			"response": [
 				{
-					"name": "Delete Produce Item",
+					"name": "Delete Produce Item Success",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -585,7 +635,7 @@
 					"body": "{\n    \"error\": false,\n    \"message\": \"Deleted product: A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"tuna\",\n        \"price\": 1.29\n    }\n}"
 				},
 				{
-					"name": "Delete Produce Item Error",
+					"name": "Delete Produce Item Not Found",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -633,6 +683,56 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: A12T-4GH7-QPL9-9997\"\n}"
+				},
+				{
+					"name": "Delete Produce Item Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/deleteitem",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"deleteitem"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 Feb 2024 15:27:14 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "79"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": true,\n    \"message\": \"Unable to verify code: Incorrect Product Code Format\"\n}"
 				}
 			]
 		},
@@ -663,56 +763,6 @@
 				}
 			},
 			"response": [
-				{
-					"name": "Delete Produce Items Error",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"products\": [\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-8997\"\r\n        },\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9998\"\r\n        }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/deleteitems",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"deleteitems"
-							]
-						}
-					},
-					"status": "Bad Request",
-					"code": 400,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Vary",
-							"value": "Origin"
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 16 Feb 2024 15:44:53 GMT"
-						},
-						{
-							"key": "Content-Length",
-							"value": "43"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: \"\n}"
-				},
 				{
 					"name": "Delete Produce Items Success",
 					"originalRequest": {
@@ -762,6 +812,106 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"error\": false,\n    \"message\": \"Deleted multiple products\",\n    \"data\": {\n        \"products\": [\n            {\n                \"code\": \"A12T-4GH7-QPL9-9997\",\n                \"name\": \"cauliflower\",\n                \"price\": 100.99\n            },\n            {\n                \"code\": \"A12T-4GH7-QPL9-9998\",\n                \"name\": \"broccoli\",\n                \"price\": 1.33\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Delete Produce Items Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"products\": [\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-8997\"\r\n        },\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9998\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/deleteitems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"deleteitems"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 Feb 2024 15:24:25 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "62"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: A12T-4GH7-QPL9-8997\"\n}"
+				},
+				{
+					"name": "Delete Produce Items Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"products\": [\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-997\"\r\n        },\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9998\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/deleteitems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"deleteitems"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 Feb 2024 15:28:01 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "79"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": true,\n    \"message\": \"Unable to verify code: Incorrect Product Code Format\"\n}"
 				}
 			]
 		},
@@ -772,7 +922,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9997\",\r\n        \"name\": \"Tuna\",\r\n        \"price\": 1.29\r\n}",
+					"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\",\r\n        \"name\": \"Tuna\",\r\n        \"price\": 1.29\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -843,7 +993,7 @@
 					"body": "{\n    \"error\": false,\n    \"message\": \"Updated A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"tuna\",\n        \"price\": 1.29\n    }\n}"
 				},
 				{
-					"name": "Update Produce Item Error",
+					"name": "Update Produce Item Not Found",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -891,6 +1041,56 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: A12T-4GH7-QPL9-9997\"\n}"
+				},
+				{
+					"name": "Update Produce Item Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-999\",\r\n        \"name\": \"Tuna\",\r\n        \"price\": 1.29\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/updateitem",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"updateitem"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 Feb 2024 15:28:52 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "105"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": true,\n    \"message\": \"Unable to create product: Unable to verify code: Incorrect Product Code Format\"\n}"
 				}
 			]
 		},
@@ -922,7 +1122,7 @@
 			},
 			"response": [
 				{
-					"name": "Update Produce Items Error",
+					"name": "Update Produce Items Not Found",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -1020,6 +1220,56 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"error\": false,\n    \"message\": \"Updated multiple products\",\n    \"data\": {\n        \"products\": [\n            {\n                \"code\": \"A12T-4GH7-QPL9-9997\",\n                \"name\": \"Twinkies\",\n                \"price\": 100.99\n            },\n            {\n                \"code\": \"A12T-4GH7-QPL9-9998\",\n                \"name\": \"Slushies\",\n                \"price\": 1.33\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Update Produce Items Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"products\": [\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-999\",\r\n                \"name\": \"Twinkies\",\r\n                \"price\": 100.99\r\n        },\r\n        {\r\n                \"code\": \"A12T-4GH7-QPL9-9998\",\r\n                \"name\": \"Slushies\",\r\n                \"price\": 1.33\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/updateitems",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"updateitems"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 Feb 2024 15:29:30 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "79"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": true,\n    \"message\": \"unable to verify code: Incorrect Product Code Format\"\n}"
 				}
 			]
 		},
@@ -1029,7 +1279,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/search?item=greeens",
+					"raw": "http://localhost:8080/search?item=Green Pe",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1041,12 +1291,107 @@
 					"query": [
 						{
 							"key": "item",
-							"value": "greeens"
+							"value": "Green Pe"
 						}
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Search Produce Item Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/search?item=Green Pe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "item",
+									"value": "Green Pe"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 Feb 2024 15:30:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "129"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": false,\n    \"message\": \"List Products\",\n    \"data\": {\n        \"products\": [\n            {\n                \"code\": \"YRT6-72AS-K736-L4AR\",\n                \"name\": \"green pepper\",\n                \"price\": 0.79\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "Search Produce Item Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/search?item=1239",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "item",
+									"value": "1239"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 19 Feb 2024 15:30:48 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "47"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: 1239\"\n}"
+				}
+			]
 		}
 	]
 }

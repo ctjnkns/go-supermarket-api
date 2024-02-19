@@ -21,9 +21,17 @@ func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.GetDatabaseItem(product.Code)
 	if err != nil {
-		err := app.ErrorJSON(w, err, http.StatusNotFound)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -43,9 +51,17 @@ func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
 func (app *Config) GetItems(w http.ResponseWriter, r *http.Request) {
 	response, err := app.GetDatabaseItems()
 	if err != nil {
-		err := app.ErrorJSON(w, err)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -76,9 +92,17 @@ func (app *Config) AddItem(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.AddDatabaseItem(product)
 	if err != nil {
-		err := app.ErrorJSON(w, err)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -109,9 +133,17 @@ func (app *Config) AddItems(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.AddDatabaseItems(products)
 	if err != nil {
-		err := app.ErrorJSON(w, err)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -142,9 +174,17 @@ func (app *Config) DeleteItem(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.DeleteDatabaseItem(product.Code)
 	if err != nil {
-		err := app.ErrorJSON(w, err, http.StatusNotFound)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -175,9 +215,17 @@ func (app *Config) DeleteItems(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.DeleteDatabaseItems(products)
 	if err != nil {
-		err := app.ErrorJSON(w, err)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -208,9 +256,17 @@ func (app *Config) UpdateItem(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.UpdateDatabaseItem(product)
 	if err != nil {
-		err := app.ErrorJSON(w, err, http.StatusNotFound)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -240,9 +296,17 @@ func (app *Config) UpdateItems(w http.ResponseWriter, r *http.Request) {
 	}
 	response, err := app.UpdateDatabaseItems(products)
 	if err != nil {
-		err := app.ErrorJSON(w, err)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
@@ -265,9 +329,17 @@ func (app *Config) Search(w http.ResponseWriter, r *http.Request) {
 
 	response, err := app.SearchDatabaseItem(searchString)
 	if err != nil {
-		err := app.ErrorJSON(w, err, http.StatusNotFound)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
+		switch err.(type) {
+		case *ErrNotFound:
+			err := app.ErrorJSON(w, err, http.StatusNotFound)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
+		default:
+			err := app.ErrorJSON(w, err, http.StatusBadRequest)
+			if err != nil {
+				log.Printf("Problem with ErrorJSON: %s", err)
+			}
 		}
 		return
 	}
