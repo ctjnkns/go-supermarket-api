@@ -10,7 +10,7 @@ import (
 
 const defaultPort = "8080"
 
-// The config struct contains the database and mutex as well as other settings needed by the supermarket api
+// Config struct contains the database and mutex as well as other settings needed by the supermarket api
 type Config struct {
 	Mutex              sync.Mutex
 	Database           map[string]Product

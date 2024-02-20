@@ -203,7 +203,7 @@ func (app *Config) GetDatabaseItem(code string) (Product, error) {
 	return product, nil
 }
 
-// GetDatabaseItem retrieves multiple products from the database, or returns an error if a product was invalid or not found
+// GetDatabaseItems retrieves multiple products from the database, or returns an error if a product was invalid or not found
 func (app *Config) GetDatabaseItems() (map[string]Product, error) {
 	app.Mutex.Lock()
 	defer app.Mutex.Unlock()
