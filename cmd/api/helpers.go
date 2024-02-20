@@ -9,13 +9,14 @@ import (
 	"strings"
 )
 
+// the JSONResponse struct contains the data types used to return JSON responses to clients
 type JSONResponse struct {
 	Error   bool   `json:"error"`
 	Message string `json:"message"`
 	Data    any    `json:"data,omitempty"`
 }
 
-// ReadJSON tries to read the body of a  request and converts it from JSON to a go data variable
+// ReadJSON tries to read the body of a request and converts it from JSON to a go data variable
 func (app *Config) ReadJSON(w http.ResponseWriter, r *http.Request, data interface{}) error {
 	maxBytes := 1024 * 1024 * 1024
 	if app.MasJSONSize != 0 {

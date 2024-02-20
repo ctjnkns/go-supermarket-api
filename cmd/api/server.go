@@ -10,6 +10,7 @@ import (
 
 const defaultPort = "8080"
 
+// The config struct contains the database and mutex as well as other settings needed by the supermarket api
 type Config struct {
 	Mutex              sync.Mutex
 	Database           map[string]Product
@@ -17,6 +18,7 @@ type Config struct {
 	AllowUnknownFields bool
 }
 
+// init creates the database and initializes it with default data
 func (app *Config) init() error {
 	app.Database = make(map[string]Product)
 	err := app.InitializeDatabase()
@@ -26,6 +28,7 @@ func (app *Config) init() error {
 	return nil
 }
 
+// main initializes the database and settings and starts the web server
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {

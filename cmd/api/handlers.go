@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// GetItem retrieves a sinlge item from the database and writes it to the http response writer, or returns an error if the item was not found
 func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
 	var product Product
 
@@ -48,6 +49,7 @@ func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// GetItems retrieves all items from the database and writes them to the http response writer
 func (app *Config) GetItems(w http.ResponseWriter, r *http.Request) {
 	response, err := app.GetDatabaseItems()
 	if err != nil {
@@ -78,6 +80,7 @@ func (app *Config) GetItems(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// AddItem adds a sinlge item to the database and writes a response to the http response writer
 func (app *Config) AddItem(w http.ResponseWriter, r *http.Request) {
 	var product Product
 
@@ -119,6 +122,7 @@ func (app *Config) AddItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// AddItems adds multiple items to the database and writes writes a response to the http response writer
 func (app *Config) AddItems(w http.ResponseWriter, r *http.Request) {
 	var products Products
 
@@ -160,6 +164,7 @@ func (app *Config) AddItems(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// DeleteItem deletes a sinlge item from the database and writes the details to the http response writer, or returns an error if the item was not found
 func (app *Config) DeleteItem(w http.ResponseWriter, r *http.Request) {
 	var product Product
 
@@ -201,6 +206,7 @@ func (app *Config) DeleteItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// DeleteItems deletes multiple items from the database and writes response details to the http response writer
 func (app *Config) DeleteItems(w http.ResponseWriter, r *http.Request) {
 	var products Products
 
@@ -242,6 +248,7 @@ func (app *Config) DeleteItems(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// UpdateItem modifies a sinlge item in the database and writes the details to the http response writer, or returns an error if the item was not found
 func (app *Config) UpdateItem(w http.ResponseWriter, r *http.Request) {
 	var product Product
 
@@ -283,6 +290,7 @@ func (app *Config) UpdateItem(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// UpdateItems modifies multiple items in the database and writes new item details to the http response writer
 func (app *Config) UpdateItems(w http.ResponseWriter, r *http.Request) {
 	var products Products
 
@@ -323,6 +331,7 @@ func (app *Config) UpdateItems(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Search searches for an item by name in the database and writes all matching items to the response writer, or a not found error if there were no matches
 func (app *Config) Search(w http.ResponseWriter, r *http.Request) {
 	searchString := r.URL.Query().Get("item")
 	searchString = strings.ToLower(searchString)
