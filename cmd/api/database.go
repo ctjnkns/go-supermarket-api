@@ -43,23 +43,41 @@ func (e *ErrNotFound) Error() string {
 
 // NewProduct creates a new product from individual inputs after verifying the inputs and converting to the proper format if possible
 func NewProduct(code string, name string, price float32) (Product, error) {
-	code = strings.ToUpper(code)
-	name = strings.ToLower(name)
 
-	err := VerifyCode(code)
+	code, err := NewCode(code)
 	if err != nil {
-		return Product{}, fmt.Errorf("Unable to verify code: %s", err)
+		return Product{}, err
 	}
-	err = VerifyName(name)
+	name, err = NewName(name)
 	if err != nil {
-		return Product{}, fmt.Errorf("Unable to verify name: %s", err)
+		return Product{}, err
 	}
 	err = VerifyPrice(price)
 	if err != nil {
-		return Product{}, fmt.Errorf("Unable to verify price: %s", err)
+		return Product{}, err
 	}
 
 	return Product{code, name, price}, nil
+}
+
+// New Code converts the code to upper case and calls VerifyCode to check the format
+func NewCode(code string) (string, error) {
+	upperCode := strings.ToUpper(code)
+	err := VerifyCode(upperCode)
+	if err != nil {
+		return "", err
+	}
+	return upperCode, nil
+}
+
+// NewName converts the name to lower case and calls VerifyName to check the format
+func NewName(name string) (string, error) {
+	lowerName := strings.ToLower(name)
+	err := VerifyName(lowerName)
+	if err != nil {
+		return "", err
+	}
+	return lowerName, nil
 }
 
 // VerifyProduct checks the formatting of the product code, name and price for a specific product.
@@ -81,7 +99,7 @@ func VerifyProduct(product Product) error {
 
 // VerifyCode ensures the product code is in the correct format and converts the code to upper case
 func VerifyCode(code string) error {
-	upperCode := strings.ToUpper(code)
+	//upperCode := strings.ToUpper(code)
 	/*
 		if upperCode != code {
 			return errors.New("Product Code should be uppercase")
@@ -89,8 +107,8 @@ func VerifyCode(code string) error {
 	*/
 
 	r := regexp.MustCompile("^[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}$")
-	if ok := r.MatchString(upperCode); !ok {
-		return errors.New("Incorrect Product Code Format")
+	if ok := r.MatchString(code); !ok {
+		return fmt.Errorf("Incorrect Product Code Format: %s", code)
 	}
 
 	return nil
@@ -98,8 +116,8 @@ func VerifyCode(code string) error {
 
 // VerifyName converts the name to lower case and makes sure that a name was provided
 func VerifyName(name string) error {
-	lowerName := strings.ToLower(name)
-	if lowerName == "" {
+	//lowerName := strings.ToLower(name)
+	if name == "" {
 		return errors.New("Name must be provided")
 	}
 
@@ -109,7 +127,7 @@ func VerifyName(name string) error {
 // VerifyPrice makes sure the price is a posive float value
 func VerifyPrice(price float32) error {
 	if price < 0.01 {
-		return errors.New("Nothing is free here")
+		return errors.New("Invalid price: Nothing is free here")
 	}
 	return nil
 }
@@ -126,11 +144,11 @@ func (app *Config) InitializeDatabase() error {
 	for _, product := range initalProducts {
 		p, err := NewProduct(product.Code, product.Name, product.Price)
 		if err != nil {
-			return fmt.Errorf("Unable to create product: %s: %s\n", product, err)
+			return fmt.Errorf("Unable to create initial product: %s: %s\n", product, err)
 		}
 		_, err = app.AddDatabaseItem(p)
 		if err != nil {
-			return fmt.Errorf("Unable to add product to database: %s:  %s\n", product, err)
+			return fmt.Errorf("Unable to add initial product to database: %s:  %s\n", product, err)
 		}
 	}
 	return nil
@@ -166,18 +184,21 @@ func (app *Config) AddDatabaseItems(products Products) (Products, error) {
 		return response, fmt.Errorf("pass in at least one product")
 	}
 
-	//look up the item to see if it already exists, we don't want to add duplicates.
+	// look up the item to see if it already exists and verify the codes
 	for _, product := range products.Products {
 		product, err := NewProduct(product.Code, product.Name, product.Price)
 		if err != nil {
-			return response, fmt.Errorf("Unable to create product: %s", err)
+			return response, err
 		}
 		if _, ok := app.Database[product.Code]; ok {
 			return response, fmt.Errorf("Duplicate item: %s", product.Code)
 		}
-
-		app.Database[product.Code] = product
 		response.Products = append(response.Products, product)
+	}
+
+	// add the items now that all have been verified
+	for _, product := range response.Products {
+		app.Database[product.Code] = product
 	}
 
 	return response, nil
@@ -190,9 +211,9 @@ func (app *Config) GetDatabaseItem(code string) (Product, error) {
 
 	var product Product
 
-	err := VerifyCode(code)
+	code, err := NewCode(code)
 	if err != nil {
-		return product, fmt.Errorf("Unable to verify code: %s", err)
+		return product, err
 	}
 
 	product, ok := app.Database[code]
@@ -223,9 +244,9 @@ func (app *Config) DeleteDatabaseItem(code string) (Product, error) {
 
 	var product Product
 
-	err := VerifyCode(code)
+	code, err := NewCode(code)
 	if err != nil {
-		return product, fmt.Errorf("Unable to verify code: %s", err)
+		return product, err
 	}
 
 	product, ok := app.Database[code]
@@ -249,17 +270,19 @@ func (app *Config) DeleteDatabaseItems(products Products) (Products, error) {
 	}
 
 	for _, product := range products.Products {
-		err := VerifyCode(product.Code)
+		code, err := NewCode(product.Code)
 		if err != nil {
-			return response, fmt.Errorf("Unable to verify code: %s", err)
+			return response, err
 		}
-		_, ok := app.Database[product.Code]
-		if !ok {
+		product.Code = code
+		if _, ok := app.Database[product.Code]; !ok {
 			return response, NewErrNotFound(fmt.Sprintf("Item not found: %s", product.Code))
 		}
-
-		delete(app.Database, product.Code)
 		response.Products = append(response.Products, product)
+	}
+
+	for _, product := range response.Products {
+		delete(app.Database, product.Code)
 	}
 
 	return response, nil
@@ -272,7 +295,7 @@ func (app *Config) UpdateDatabaseItem(product Product) (Product, error) {
 
 	product, err := NewProduct(product.Code, product.Name, product.Price)
 	if err != nil {
-		return product, fmt.Errorf("Unable to create product: %s", err)
+		return product, err
 	}
 
 	//look up the item to make sure it exists.
@@ -297,16 +320,19 @@ func (app *Config) UpdateDatabaseItems(products Products) (Products, error) {
 	}
 
 	for _, product := range products.Products {
-		err := VerifyCode(product.Code)
+		thisProduct, err := NewProduct(product.Code, product.Name, product.Price)
 		if err != nil {
-			return response, fmt.Errorf("unable to verify code: %s", err)
+			return response, err
 		}
-		if _, ok := app.Database[product.Code]; !ok {
+		if _, ok := app.Database[thisProduct.Code]; !ok {
 			return response, NewErrNotFound(fmt.Sprintf("Item not found: %s", product.Code))
 		}
+		response.Products = append(response.Products, thisProduct)
+	}
 
+	// update the items in the database now that they've all been verified
+	for _, product := range response.Products {
 		app.Database[product.Code] = product
-		response.Products = append(response.Products, product)
 	}
 
 	return response, nil
