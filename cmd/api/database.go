@@ -114,7 +114,7 @@ func VerifyPrice(price float32) error {
 	return nil
 }
 
-// InitializeDatabase adds the default prodcuts to the database
+// InitializeDatabase adds the default products to the database
 func (app *Config) InitializeDatabase() error {
 	initalProducts := []Product{
 		{"a12T-4GH7-QPL9-3N4M", "Lettuce", 3.46}, //lower case a to test toUpper
