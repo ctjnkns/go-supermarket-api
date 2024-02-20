@@ -161,7 +161,7 @@ func (app *Config) AddDatabaseItem(product Product) (Product, error) {
 
 	product, err := NewProduct(product.Code, product.Name, product.Price)
 	if err != nil {
-		return product, fmt.Errorf("Unable to create product: %s", err)
+		return product, fmt.Errorf("Unable to create product: %w", err)
 	}
 
 	//look up the item to see if it already exists, we don't want to add duplicates.

@@ -26,6 +26,7 @@ func (app *Config) init() error {
 		return fmt.Errorf("Unable to initialize database with default vaules: %s", err)
 	}
 	return nil
+
 }
 
 // main initializes the database and settings and starts the web server
