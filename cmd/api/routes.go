@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/cors"
 )
 
+// routes registers the routes and heandlers for the supermarket api
 func (app *Config) routes() http.Handler {
 	mux := chi.NewRouter()
 
