@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "6f302b73-9e20-49ce-8d46-1c698ae02972",
-		"name": "Supermarket API JSON Build",
+		"_postman_id": "6f21af35-e51e-4c67-a0f8-79d7cf422136",
+		"name": "Supermarket API CRUD Build",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30655896"
 	},
@@ -11,30 +11,19 @@
 			"item": [
 				{
 					"name": "Get Produce Item",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/getitem",
+							"raw": "http://localhost:8080/items/A12T-4GH7-QPL9-9999",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"getitem"
+								"items",
+								"A12T-4GH7-QPL9-9999"
 							]
 						}
 					},
@@ -206,14 +195,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/additem",
+							"raw": "http://localhost:8080/items",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"additem"
+								"items"
 							]
 						}
 					},
@@ -371,192 +360,13 @@
 					]
 				},
 				{
-					"name": "Delete Produce Item",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/deleteitem",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"deleteitem"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Delete Produce Item Success",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9997\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/deleteitem",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"deleteitem"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 16 Feb 2024 15:36:37 GMT"
-								},
-								{
-									"key": "Content-Length",
-									"value": "129"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"error\": false,\n    \"message\": \"Deleted product: A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"tuna\",\n        \"price\": 1.29\n    }\n}"
-						},
-						{
-							"name": "Delete Produce Item Not Found",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9997\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/deleteitem",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"deleteitem"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin"
-								},
-								{
-									"key": "Date",
-									"value": "Fri, 16 Feb 2024 15:37:24 GMT"
-								},
-								{
-									"key": "Content-Length",
-									"value": "62"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: A12T-4GH7-QPL9-9997\"\n}"
-						},
-						{
-							"name": "Delete Produce Item Bad Request",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-999\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/deleteitem",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"deleteitem"
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin"
-								},
-								{
-									"key": "Date",
-									"value": "Mon, 19 Feb 2024 15:27:14 GMT"
-								},
-								{
-									"key": "Content-Length",
-									"value": "79"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"error\": true,\n    \"message\": \"Unable to verify code: Incorrect Product Code Format\"\n}"
-						}
-					]
-				},
-				{
 					"name": "Update Produce Item",
 					"request": {
-						"method": "POST",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\",\r\n        \"name\": \"Tuna\",\r\n        \"price\": 1.29\r\n}",
+							"raw": "{\r\n        \"name\": \"Tuna\",\r\n        \"price\": 1.29\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -564,14 +374,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/updateitem",
+							"raw": "http://localhost:8080/items/A12T-4GH7-QPL9-9999",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"updateitem"
+								"items",
+								"A12T-4GH7-QPL9-9999"
 							]
 						}
 					},
@@ -725,6 +536,186 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"error\": true,\n    \"message\": \"Unable to create product: Unable to verify code: Incorrect Product Code Format\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Produce Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/items/A12T-4GH7-QPL9-9999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items",
+								"A12T-4GH7-QPL9-9999"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Produce Item Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9997\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/deleteitem",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"deleteitem"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 16 Feb 2024 15:36:37 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "129"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": false,\n    \"message\": \"Deleted product: A12T-4GH7-QPL9-9999\",\n    \"data\": {\n        \"code\": \"A12T-4GH7-QPL9-9999\",\n        \"name\": \"tuna\",\n        \"price\": 1.29\n    }\n}"
+						},
+						{
+							"name": "Delete Produce Item Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-9997\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/deleteitem",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"deleteitem"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 16 Feb 2024 15:37:24 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "62"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": true,\n    \"message\": \"Item not found: A12T-4GH7-QPL9-9997\"\n}"
+						},
+						{
+							"name": "Delete Produce Item Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"code\": \"A12T-4GH7-QPL9-999\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/deleteitem",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"deleteitem"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 19 Feb 2024 15:27:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "79"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": true,\n    \"message\": \"Unable to verify code: Incorrect Product Code Format\"\n}"
 						}
 					]
 				}
