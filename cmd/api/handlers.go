@@ -5,22 +5,15 @@ import (
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/go-chi/chi/v5"
 )
 
 // GetItem retrieves a sinlge item from the database and writes it to the http response writer, or returns an error if the item was not found
 func (app *Config) GetItem(w http.ResponseWriter, r *http.Request) {
-	var product Product
+	code := chi.URLParam(r, "code")
 
-	err := app.ReadJSON(w, r, &product)
-	if err != nil {
-		err := app.ErrorJSON(w, err)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
-		}
-		return
-	}
-
-	response, err := app.GetDatabaseItem(product.Code)
+	response, err := app.GetDatabaseItem(code)
 	if err != nil {
 		switch err.(type) {
 		case *ErrNotFound:
@@ -168,14 +161,7 @@ func (app *Config) AddItems(w http.ResponseWriter, r *http.Request) {
 func (app *Config) DeleteItem(w http.ResponseWriter, r *http.Request) {
 	var product Product
 
-	err := app.ReadJSON(w, r, &product)
-	if err != nil {
-		err := app.ErrorJSON(w, err)
-		if err != nil {
-			log.Printf("Problem with ErrorJSON: %s", err)
-		}
-		return
-	}
+	product.Code = chi.URLParam(r, "code")
 
 	response, err := app.DeleteDatabaseItem(product.Code)
 	if err != nil {
@@ -260,6 +246,8 @@ func (app *Config) UpdateItem(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+
+	product.Code = chi.URLParam(r, "code")
 
 	response, err := app.UpdateDatabaseItem(product)
 	if err != nil {

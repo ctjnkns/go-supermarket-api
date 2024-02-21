@@ -293,17 +293,34 @@ func (app *Config) UpdateDatabaseItem(product Product) (Product, error) {
 	app.Mutex.Lock()
 	defer app.Mutex.Unlock()
 
-	product, err := NewProduct(product.Code, product.Name, product.Price)
+	// maybe need to update the proudct code? Assume it's an actual UUID and we don't need to
+	code, err := NewCode(product.Code)
 	if err != nil {
 		return product, err
 	}
 
 	//look up the item to make sure it exists.
-	if response, ok := app.Database[product.Code]; !ok {
-		return response, NewErrNotFound(fmt.Sprintf("Item not found: %s", product.Code))
+	currentProduct, ok := app.Database[code]
+	if !ok {
+		return currentProduct, NewErrNotFound(fmt.Sprintf("Item not found: %s", product.Code))
 	}
 
-	app.Database[product.Code] = product
+	if product.Name != "" {
+		currentProduct.Name, err = NewName(product.Name)
+		if err != nil {
+			return currentProduct, err
+		}
+	}
+
+	if product.Price != 0 {
+		err = VerifyPrice(product.Price)
+		if err != nil {
+			return currentProduct, err
+		}
+		currentProduct.Price = product.Price
+	}
+
+	app.Database[product.Code] = currentProduct
 
 	return product, nil
 }
